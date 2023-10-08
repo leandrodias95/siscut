@@ -35,8 +35,8 @@ public class ServletRecuperarSenha extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 		String recuperaEmail = request.getParameter("recuperaemail");
-		String userName="testemailleandro@gmail.com";
-		String password="ddcanvhahbmcdpgl"; 
+		String userName="coloque seu e-mail aqui";
+		String password="coloque sua senha aqui"; 
 		DAOLoginRepository oDaoLoginRepository = new DAOLoginRepository();
 		Usuario oUsuario = oDaoLoginRepository.recuperarSenha(recuperaEmail);
 			if(recuperaEmail.equals(oUsuario.getEmail())) {
