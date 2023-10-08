@@ -1,0 +1,84 @@
+package br.com.siscut.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import br.com.siscut.connection.SingletonConnection;
+import br.com.siscut.model.Usuario;
+
+public class DAOUsuarioRepository {
+	Connection connection;
+
+	public DAOUsuarioRepository() {
+		connection = SingletonConnection.getConnection();
+	}
+
+	public Usuario gravar(Usuario usuario) throws SQLException {
+		if (usuario.isNovo() == true) {
+			try {
+				String sql = "insert into model_login(login,senha,email,nome)values(?,?,?,?)";
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setString(1, usuario.getLogin());
+				statement.setString(2, usuario.getSenha());
+				statement.setString(3, usuario.getEmail());
+				statement.setString(4, usuario.getNome());
+				statement.execute();
+				connection.commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				try {
+					connection.rollback();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+		} else if (usuario.isNovo() == false) {
+			try {
+				String sql = "update model_login set login=?, senha=?, email=?, nome=? where login = "
+						+ usuario.getId();
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setString(1, usuario.getLogin());
+				statement.setString(2, usuario.getSenha());
+				statement.setString(3, usuario.getEmail());
+				statement.setString(4, usuario.getNome());
+				statement.executeUpdate();
+				connection.commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				try {
+					connection.rollback();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return this.consultarUsuario(usuario.getLogin());
+	}
+
+	public Usuario consultarUsuario(String login) throws SQLException {
+		Usuario usuario = new Usuario();
+		String sql = "select * from model_login where upper(login) = upper('" + login + "')";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultado = statement.executeQuery();
+		while (resultado.next()) {
+		usuario.setId(resultado.getLong("id"));
+		usuario.setLogin(resultado.getString("login"));
+		usuario.setSenha(resultado.getString("senha"));
+		usuario.setEmail(resultado.getString("email"));
+		usuario.setNome(resultado.getString("nome"));
+		}
+		return usuario;
+	}
+
+	public boolean validaLogin(String login) throws Exception {
+		String sql="select count(1)>0 as existe from model_login where upper(login)=upper('"+login+"')";
+		PreparedStatement retorno = connection.prepareStatement(sql);
+		ResultSet resultado = retorno.executeQuery();
+		resultado.next(); //entra nos resultados do sql
+		return resultado.getBoolean("existe");
+	}
+	
+}
