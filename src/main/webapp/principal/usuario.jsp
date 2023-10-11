@@ -71,10 +71,10 @@
 															</div>
 															<button class="btn btn-primary waves-effect waves-light" onclick="limparForm()">Novo</button>
 															<button class="btn btn-success waves-effect waves-light">Salvar</button>
-															<button class="btn btn-info waves-effect waves-light" onclick="deleteUsuario()">Excluir</button>
+															<button class="btn btn-info waves-effect waves-light" onclick="deleteUsuarioAjax()">Excluir</button>
 														</form>
 													</div>
-													<span>${msg}</span>
+													<span id="msg">${msg}</span>
 												</div>
 											</div>
 										</div>
@@ -98,6 +98,23 @@
 		}
 	}
 	
+	function deleteUsuarioAjax(){
+		if(confirm('Deseja deletar o usuário?')){
+			var urlAction = document.getElementById("form").action; //busca os valores da servlet 
+			var idUser = document.getElementById("id").value;
+			$.ajax({
+				method:"get",
+				url: urlAction,
+				data:"id="+idUser+"&acao=deletarAjax",
+				success: function(response){
+					document.getElementById("msg").textContent = response;
+					limparForm();
+				}
+			}).fail (function(xhr, status, errorThrow){
+				alert("Erro ao deletar usuário por id: "+xhr.responseText);
+			});
+		}
+	}
 	function deleteUsuario(){
 		if(confirm('Deseja deletar o usuário?')){
 		document.getElementById("form").method='get';
