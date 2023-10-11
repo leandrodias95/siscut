@@ -69,7 +69,7 @@
 																	autocomplete="off" value="${ousuario.senha}"> <span
 																	class="form-bar"></span> <label class="float-label">Senha:</label>
 															</div>
-															<button class="btn btn-primary waves-effect waves-light">Novo</button>
+															<button class="btn btn-primary waves-effect waves-light" onclick="limparForm()">Novo</button>
 															<button class="btn btn-success waves-effect waves-light">Salvar</button>
 															<button class="btn btn-info waves-effect waves-light" onclick="deleteUsuario()">Excluir</button>
 														</form>
@@ -91,6 +91,13 @@
 	</div>
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 	<script type="text/javascript">
+	function limparForm(){
+		var elementos = document.getElementById("form").elements;
+		for(pi=0;pi<elementos.length;pi++){
+			elementos[pi].value='';
+		}
+	}
+	
 	function deleteUsuario(){
 		if(confirm('Deseja deletar o usuário?')){
 		document.getElementById("form").method='get';
