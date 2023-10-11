@@ -29,7 +29,10 @@ public class ServletUsuarioController extends HttpServlet {
 				RequestDispatcher retornar = request.getRequestDispatcher("/principal/usuario.jsp");
 				request.setAttribute("msg", "Excluído com sucesso!");
 				retornar.forward(request, response);
-
+			}else if(acao != null && !acao.isEmpty() && acao.equals("deletarAjax")) {
+				String idUser = request.getParameter("id");
+				oDAOUsuarioRepository.deletarUsuario(Long.parseLong(idUser));
+				response.getWriter().write("Usuário excluído com sucesso");				
 			} else {
 				RequestDispatcher retornar = request.getRequestDispatcher("/principal/usuario.jsp");
 				request.setAttribute("msg", "Não foi possível excluir");
