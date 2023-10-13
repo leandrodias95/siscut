@@ -47,10 +47,8 @@ public class FilterAutenticacao extends HttpFilter implements Filter {
 			RequestDispatcher redirecionar = request.getRequestDispatcher("/index.jsp?="+urlParaAutenticar);
 			request.setAttribute("msg","Por favor realize o login");
 			redirecionar.forward(request, response);
-			return;
-		}else{
-		chain.doFilter(request, response);
 		}
+		chain.doFilter(request, response);
 		connection.commit();
 	}catch(Exception e) {
 		e.printStackTrace();

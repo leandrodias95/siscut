@@ -49,7 +49,7 @@ public class UsuarioLogado extends HttpServlet {
 						RequestDispatcher redirecionar = request.getRequestDispatcher(url);
 						redirecionar.forward(request, response);
 					}
-					RequestDispatcher redirecionar = request.getRequestDispatcher("/principal/principal.jsp");
+					RequestDispatcher redirecionar = request.getRequestDispatcher("principal/principal.jsp");
 					redirecionar.forward(request, response);
 				} else {
 					RequestDispatcher redirecionar = request.getRequestDispatcher("/index.jsp");

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.siscut.connection.SingletonConnection;
 import br.com.siscut.model.Usuario;
@@ -58,6 +60,25 @@ public class DAOUsuarioRepository {
 		return this.consultarUsuario(usuario.getLogin());
 	}
 
+	public List<Usuario> consultaPorNome(String nome)throws SQLException{
+		List<Usuario> retorno = new ArrayList<Usuario>();
+		String sql ="select * from model_login where upper(nome) like upper(?)";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, "%"+nome+"%");
+		ResultSet resultado = statement.executeQuery();
+		while(resultado.next()) {
+			Usuario oUsuario = new Usuario();
+			oUsuario.setId(resultado.getLong("id"));
+			oUsuario.setNome(resultado.getString("nome"));
+			oUsuario.setEmail(resultado.getString("email"));
+			oUsuario.setLogin(resultado.getString("login"));
+			//oUsuario.setSenha(resultado.getString("senha"));
+			retorno.add(oUsuario);
+			
+		}
+		return retorno;
+	}
+	
 	public Usuario consultarUsuario(String login) throws SQLException {
 		Usuario usuario = new Usuario();
 		String sql = "select * from model_login where upper(login) = upper('" + login + "')";
