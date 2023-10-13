@@ -69,9 +69,13 @@
 																	autocomplete="off" value="${ousuario.senha}"> <span
 																	class="form-bar"></span> <label class="float-label">Senha:</label>
 															</div>
-															<button class="btn btn-primary waves-effect waves-light" onclick="limparForm()">Novo</button>
+															<button class="btn btn-primary waves-effect waves-light"
+																onclick="limparForm()">Novo</button>
 															<button class="btn btn-success waves-effect waves-light">Salvar</button>
-															<button class="btn btn-info waves-effect waves-light" onclick="deleteUsuarioAjax()">Excluir</button>
+															<button class="btn btn-info waves-effect waves-light"
+																onclick="deleteUsuarioAjax()">Excluir</button>
+															<button type="button" class="btn btn-warning"
+																data-toggle="modal" data-target="#buscarNomeModal">Pesquisar</button>
 														</form>
 													</div>
 													<span id="msg">${msg}</span>
@@ -91,37 +95,101 @@
 	</div>
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 	<script type="text/javascript">
-	function limparForm(){
-		var elementos = document.getElementById("form").elements;
-		for(pi=0;pi<elementos.length;pi++){
-			elementos[pi].value='';
+		function limparForm() {
+			var elementos = document.getElementById("form").elements;
+			for (pi = 0; pi < elementos.length; pi++) {
+				elementos[pi].value = '';
+			}
 		}
-	}
-	
-	function deleteUsuarioAjax(){
-		if(confirm('Deseja deletar o usuário?')){
-			var urlAction = document.getElementById("form").action; //busca os valores da servlet 
-			var idUser = document.getElementById("id").value;
-			$.ajax({
-				method:"get",
-				url: urlAction,
-				data:"id="+idUser+"&acao=deletarAjax",
-				success: function(response){
-					document.getElementById("msg").textContent = response;
-					limparForm();
-				}
-			}).fail (function(xhr, status, errorThrow){
-				alert("Erro ao deletar usuário por id: "+xhr.responseText);
-			});
+
+		function deleteUsuarioAjax() {
+			if (confirm('Deseja deletar o usuário?')) {
+				var urlAction = document.getElementById("form").action; //busca os valores da servlet 
+				var idUser = document.getElementById("id").value;
+				$.ajax({
+					method : "get",
+					url : urlAction,
+					data : "id=" + idUser + "&acao=deletarAjax",
+					success : function(response) {
+						document.getElementById("msg").textContent = response;
+						limparForm();
+					}
+				}).fail(
+						function(xhr, status, errorThrow) {
+							alert("Erro ao deletar usuário por id: "
+									+ xhr.responseText);
+						});
+			}
 		}
-	}
-	function deleteUsuario(){
-		if(confirm('Deseja deletar o usuário?')){
-		document.getElementById("form").method='get';
-		document.getElementById("acao").value='deletar';
-		document.getElementById("form").submit();
+		function deleteUsuario() {
+			if (confirm('Deseja deletar o usuário?')) {
+				document.getElementById("form").method = 'get';
+				document.getElementById("acao").value = 'deletar';
+				document.getElementById("form").submit();
+			}
 		}
-	}
+		function buscarNomeAjax() {
+			var buscaNome = document.getElementById("buscaNome").value;
+			if (buscaNome != null && buscaNome != "" && buscaNome.trim()) {
+				var urlAction = document.getElementById("form").action;
+				$.ajax({
+					method : "get",
+					url : urlAction,
+					data : "nome=" + buscaNome + "&acao=buscarNomeAjax",
+					success : function(response) {
+
+					}
+				}).fail(
+						function(xhr, status, errorThrow) {
+							alert("Erro ao buscar usuário pelo nome: "
+									+ xhr.responseText);
+						});
+			}
+		}
 	</script>
+
+	<!-- Modal -->
+	<div class="modal fade" id="buscarNomeModal" tabindex="-1"
+		role="dialog" aria-labelledby="buscarNomeModal" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Pesquisar
+						usuário</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<!-- corpo modal -->
+				<div class="modal-body">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" placeholder="Nome"
+							aria-label="nome" aria-describedby="basic-addon2" id="buscaNome">
+						<div class="input-group-append">
+							<button class="btn btn-success" type="button"
+								onclick="buscarNomeAjax()">Buscar</button>
+						</div>
+					</div>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">ID</th>
+							<th scope="col">Nome</th>
+							<th scope="col">Ver</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<!-- fim corpo modal -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

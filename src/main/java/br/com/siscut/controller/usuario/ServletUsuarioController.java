@@ -6,6 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.siscut.dao.DAOUsuarioRepository;
 import br.com.siscut.model.Usuario;
@@ -37,6 +40,13 @@ public class ServletUsuarioController extends HttpServlet {
 				RequestDispatcher retornar = request.getRequestDispatcher("/principal/usuario.jsp");
 				request.setAttribute("msg", "Não foi possível excluir");
 				retornar.forward(request, response);
+			}
+			if(acao != null && !acao.isEmpty() && acao.equals("buscarNomeAjax")) {
+				String nomeUser = request.getParameter("nome");
+				List<Usuario> dadosJson = oDAOUsuarioRepository.consultaPorNome(nomeUser);
+				ObjectMapper mapper = new ObjectMapper();
+				String jsonUserNome = mapper.writeValueAsString(dadosJson);
+				response.getWriter().write(jsonUserNome);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
