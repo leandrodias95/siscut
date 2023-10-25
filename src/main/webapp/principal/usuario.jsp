@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <jsp:include page="head.jsp"></jsp:include>
 <jsp:include page="theme-loader.jsp"></jsp:include>
-
 <body>
 	<!-- Pre-loader start -->
 
@@ -78,8 +78,26 @@
 																data-toggle="modal" data-target="#buscarNomeModal">Pesquisar</button>
 														</form>
 													</div>
-													<span id="msg">${msg}</span>
 												</div>
+												<span id="msg">${msg}</span>
+												<table class="table">
+													<thead>
+														<tr>
+															<th scope="col">ID</th>
+															<th scope="col">Nome</th>
+															<th scope="col">Ver</th>
+														</tr>
+													</thead>
+													<tbody>
+													<c:forEach items="${ousuarios}" var="usuarios">
+													<tr>
+													<td><c:out value="${usuarios.id}"></c:out></td>
+													<td><c:out value="${usuarios.nome}"></c:out></td>
+													<td><a href="<%=request.getContextPath()%>/ServletUsuarioController?acao=buscarEditar&id=${usuarios.id}" class="btn btn-warning">Ver</a></td>
+													</tr>
+													</c:forEach>
+													</tbody>
+												</table>
 											</div>
 										</div>
 									</div>
@@ -95,69 +113,80 @@
 	</div>
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 	<script type="text/javascript">
-	
-	function limparForm() {
-		var elementos = document.getElementById("form").elements;
-		for (pi = 0; pi < elementos.length; pi++) {
-			elementos[pi].value = '';
+		function limparForm() {
+			var elementos = document.getElementById("form").elements;
+			for (pi = 0; pi < elementos.length; pi++) {
+				elementos[pi].value = '';
+			}
 		}
-	}
 
-	function deleteUsuarioAjax() {
-		if (confirm('Deseja deletar o usuário?')) {
-			var urlAction = document.getElementById("form").action; //busca os valores da servlet 
-			var idUser = document.getElementById("id").value;
-			$.ajax({
-				method : "get",
-				url : urlAction,
-				data : "id=" + idUser + "&acao=deletarAjax",
-				success : function(response) {
-					document.getElementById("msg").textContent = response;
-					limparForm();
-				}
-			}).fail(
-					function(xhr, status, errorThrow) {
-						alert("Erro ao deletar usuário por id: "
-								+ xhr.responseText);
-					});
-		}
-	}
-	function deleteUsuario() {
-		if (confirm('Deseja deletar o usuário?')) {
-			document.getElementById("form").method = 'get';
-			document.getElementById("acao").value = 'deletar';
-			document.getElementById("form").submit();
-		}
-	}
-		function buscarNomeAjax(){
-			var buscaNome = document.getElementById("buscaNome").value;
-			if (buscaNome != null && buscaNome != '' && buscaNome.trim()!=''){
-				var urlAction = document.getElementById("form").action;
+		function deleteUsuarioAjax() {
+			if (confirm('Deseja deletar o usuário?')) {
+				var urlAction = document.getElementById("form").action; //busca os valores da servlet 
+				var idUser = document.getElementById("id").value;
 				$.ajax({
 					method : "get",
 					url : urlAction,
-					data : "buscaNome=" + buscaNome + "&acao=buscarNomeAjax",
+					data : "id=" + idUser + "&acao=deletarAjax",
 					success : function(response) {
-					var json = JSON.parse(response); //variavel que recebe a minha resposta e converte para json
-					$('#tabelaresultados > tbody > tr').remove();
-					for(var p = 0; p<json.length; p++){
-						$('#tabelaresultados > tbody').append
-						('<tr><td>'+json[p].id+'</td><td>'+json[p].nome+'</td><td><button type="button" class="btn btn-info" onclick="verEditar('
-								+json[p].id+')">Ver</button></td></tr>');
-					}
-					document.getElementById('totalresultados').textContent = 'Resultados: '+json.length;
+						document.getElementById("msg").textContent = response;
+						limparForm();
 					}
 				}).fail(
 						function(xhr, status, errorThrow) {
-							alert("Erro ao buscar usuário pelo nome: "
+							alert("Erro ao deletar usuário por id: "
 									+ xhr.responseText);
-						})
+						});
 			}
 		}
-		function verEditar(id){
+		function deleteUsuario() {
+			if (confirm('Deseja deletar o usuário?')) {
+				document.getElementById("form").method = 'get';
+				document.getElementById("acao").value = 'deletar';
+				document.getElementById("form").submit();
+			}
+		}
+		function buscarNomeAjax() {
+			var buscaNome = document.getElementById("buscaNome").value;
+			if (buscaNome != null && buscaNome != '' && buscaNome.trim() != '') {
+				var urlAction = document.getElementById("form").action;
+				$
+						.ajax(
+								{
+									method : "get",
+									url : urlAction,
+									data : "buscaNome=" + buscaNome
+											+ "&acao=buscarNomeAjax",
+									success : function(response) {
+										var json = JSON.parse(response); //variavel que recebe a minha resposta e converte para json
+										$('#tabelaresultados > tbody > tr')
+												.remove();
+										for (var p = 0; p < json.length; p++) {
+											$('#tabelaresultados > tbody')
+													.append(
+															'<tr><td>'
+																	+ json[p].id
+																	+ '</td><td>'
+																	+ json[p].nome
+																	+ '</td><td><button type="button" class="btn btn-info" onclick="verEditar('
+																	+ json[p].id
+																	+ ')">Ver</button></td></tr>');
+										}
+										document
+												.getElementById('totalresultados').textContent = 'Resultados: '
+												+ json.length;
+									}
+								}).fail(
+								function(xhr, status, errorThrow) {
+									alert("Erro ao buscar usuário pelo nome: "
+											+ xhr.responseText);
+								})
+			}
+		}
+		function verEditar(id) {
 			var urlAction = document.getElementById("form").action;
-			window.location.href = urlAction + '?acao=buscarEditar&id='+id; 	/*redireciona para uma nova url cocatenando os valores da 
-																				acao e id*/
+			window.location.href = urlAction + '?acao=buscarEditar&id=' + id; /*redireciona para uma nova url cocatenando os valores da 
+																							acao e id*/
 		}
 	</script>
 
@@ -179,7 +208,8 @@
 						<input type="text" class="form-control" placeholder="Nome"
 							aria-label="nome" aria-describedby="basic-addon2" id="buscaNome">
 						<div class="input-group-append">
-							<button onclick="buscarNomeAjax()" class="btn btn-success" type="button">Buscar</button>
+							<button onclick="buscarNomeAjax()" class="btn btn-success"
+								type="button">Buscar</button>
 						</div>
 					</div>
 					<div style="height: 300px; overflow: scroll;">

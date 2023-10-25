@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,8 +48,16 @@ public class ServletUsuarioController extends HttpServlet {
 			else if(acao !=null && !acao.isEmpty() && acao.equals("buscarEditar")) {
 				String idUser = request.getParameter("id");
 				Usuario oUsuario  = oDAOUsuarioRepository.consultarUsuarioId(idUser);
+				List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista();
+				request.setAttribute("ousuarios", oUsuarios);
 				request.setAttribute("msg", "Usuario em Edição");
 				request.setAttribute("ousuario", oUsuario); //armazena os dados na variavel para carregar na tela usuario.jsp
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			}
+			else if(acao !=null && !acao.isEmpty() && acao.equals("listarUsuarios")) {
+				List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista();
+				request.setAttribute("ousuarios", oUsuarios);
+				request.setAttribute("msg", "Usuarios carregados");
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
@@ -86,6 +95,8 @@ public class ServletUsuarioController extends HttpServlet {
 				}
 				oUsuario = oDAOUsuarioRepository.gravar(oUsuario);
 			}
+			List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista();
+			request.setAttribute("ousuarios", oUsuarios);
 			request.setAttribute("msg", msg);
 			request.setAttribute("ousuario", oUsuario);
 			request.getRequestDispatcher("/principal/usuario.jsp").forward(request, response);
