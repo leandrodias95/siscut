@@ -36,7 +36,7 @@ h5 {
 }
 a {
 	position: absolute;
-	top: 75%;
+	top: 82%;
 	left: 33%
 }
 </style>

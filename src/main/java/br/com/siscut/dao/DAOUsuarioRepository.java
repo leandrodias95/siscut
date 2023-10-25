@@ -93,6 +93,21 @@ public class DAOUsuarioRepository {
 		}
 		return usuario;
 	}
+	public Usuario consultarUsuarioId(String Id) throws SQLException {
+		Usuario oUsuario = new Usuario();
+		String sql = "select * from model_login where id=?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, Long.parseLong(Id));
+		ResultSet resultado = statement.executeQuery();
+		while(resultado.next()) {
+			oUsuario.setId(resultado.getLong("id"));
+			oUsuario.setNome(resultado.getString("nome"));
+			oUsuario.setEmail(resultado.getString("email"));
+			oUsuario.setLogin(resultado.getString("login"));
+			oUsuario.setSenha(resultado.getString("senha"));
+		}
+		return oUsuario;
+	}
 
 	public boolean validaLogin(String login) throws Exception {
 		String sql="select count(1)>0 as existe from model_login where upper(login)=upper('"+login+"')";
