@@ -36,17 +36,20 @@ public class ServletUsuarioController extends HttpServlet {
 				String idUser = request.getParameter("id");
 				oDAOUsuarioRepository.deletarUsuario(Long.parseLong(idUser));
 				response.getWriter().write("Usuário excluído com sucesso");				
-			} else {
-				RequestDispatcher retornar = request.getRequestDispatcher("/principal/usuario.jsp");
-				request.setAttribute("msg", "Não foi possível excluir");
-				retornar.forward(request, response);
-			}
-			if(acao != null && !acao.isEmpty() && acao.equals("buscarNomeAjax")) {
-				String nomeUser = request.getParameter("nome");
+			} 
+			else if(acao != null && !acao.isEmpty() && acao.equals("buscarNomeAjax")) {
+				String nomeUser = request.getParameter("buscaNome");
 				List<Usuario> dadosJson = oDAOUsuarioRepository.consultaPorNome(nomeUser);
 				ObjectMapper mapper = new ObjectMapper();
 				String jsonUserNome = mapper.writeValueAsString(dadosJson);
 				response.getWriter().write(jsonUserNome);
+			}
+			else if(acao !=null && !acao.isEmpty() && acao.equals("buscarEditar")) {
+				String idUser = request.getParameter("id");
+				Usuario oUsuario  = oDAOUsuarioRepository.consultarUsuarioId(idUser);
+				request.setAttribute("msg", "Usuario em Edição");
+				request.setAttribute("ousuario", oUsuario); //armazena os dados na variavel para carregar na tela usuario.jsp
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
