@@ -79,6 +79,21 @@ public class DAOUsuarioRepository {
 		return retorno;
 	}
 	
+	public List<Usuario> consultaLista()throws SQLException{
+		List<Usuario> retorno = new ArrayList<Usuario>();
+		String sql ="select id, nome from model_login";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultado = statement.executeQuery();
+		while(resultado.next()) {
+			Usuario oUsuario = new Usuario();
+			oUsuario.setId(resultado.getLong("id"));
+			oUsuario.setNome(resultado.getString("nome"));
+			retorno.add(oUsuario);
+			
+		}
+		return retorno;
+	}
+	
 	public Usuario consultarUsuario(String login) throws SQLException {
 		Usuario usuario = new Usuario();
 		String sql = "select * from model_login where upper(login) = upper('" + login + "')";
