@@ -6,6 +6,8 @@ public class Usuario {
 	private String senha;
 	private String email;
 	private String nome;
+	private boolean userAdmin;
+	private String perfil;
 	
 	public Long getId() {
 		return id;
@@ -45,10 +47,26 @@ public class Usuario {
 		}
 		return this.id == null;
 	}
+	
+	
+	public boolean getUserAdmin() {
+		return userAdmin;
+	}
+	public void setUserAdmin(boolean userAdmin) {
+		this.userAdmin = userAdmin;
+	}
+	
+	public String getPerfil() {
+		return perfil;
+	}
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", login=" + login + ", senha=" + senha + ", email=" + email + ", nome=" + nome
-				+ "]";
-	}	
+				+ ", userAdmin=" + userAdmin + "]";
+	}
+		
 
 }
