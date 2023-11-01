@@ -42,7 +42,7 @@ position: absolute;
 				class="form-control" type="email" name="recuperaemail"
 				id="recuperaemail" required style="width:400px">
 		</div>
-		<button type="submit" class="btn btn-primary" style="width:400px">Envivar</button>
+		<button type="submit" class="btn btn-primary" style="width:400px">Enviar</button>
 	</form>
 	<h6 class="fail">${msg}</h6>
 	<h6 class="success">${msgSuccess}</h6>

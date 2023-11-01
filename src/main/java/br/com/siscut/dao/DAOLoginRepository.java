@@ -23,6 +23,7 @@ public class DAOLoginRepository {
 		statement.setString(2, oUsuario.getSenha());
 		ResultSet resultado = statement.executeQuery();
 		if (resultado.next()) {
+			oUsuario.setPerfil(resultado.getString("perfil"));
 			return true;
 		}
 		return false;

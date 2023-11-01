@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,6 +52,16 @@
 																	class="form-bar"></span> <label class="float-label">Nome:</label>
 															</div>
 															<div class="form-group form-default form-static-label">
+																<select name="perfil" class="form-control" aria-label="Default select example"  required="required">
+																<option>${ousuario.perfil}</option>
+																<option value="ADMINISTRADOR">Administrador</option>
+																<option value="SECRETARIO">Secretário</option>
+																<option value="AUXILIAR">Auxiliar</option>
+																</select>
+												 <span class="form-bar"></span><label class="float-label">Selecionar Usuário</label>
+															</div>
+
+															<div class="form-group form-default form-static-label">
 																<input type="email" name="email" id="email"
 																	class="form-control" required="required"
 																	autocomplete="off" value="${ousuario.email}"> <span
@@ -89,13 +99,15 @@
 														</tr>
 													</thead>
 													<tbody>
-													<c:forEach items="${ousuarios}" var="usuarios">
-													<tr>
-													<td><c:out value="${usuarios.id}"></c:out></td>
-													<td><c:out value="${usuarios.nome}"></c:out></td>
-													<td><a href="<%=request.getContextPath()%>/ServletUsuarioController?acao=buscarEditar&id=${usuarios.id}" class="btn btn-warning">Ver</a></td>
-													</tr>
-													</c:forEach>
+														<c:forEach items="${ousuarios}" var="usuarios">
+															<tr>
+																<td><c:out value="${usuarios.id}"></c:out></td>
+																<td><c:out value="${usuarios.nome}"></c:out></td>
+																<td><a
+																	href="<%=request.getContextPath()%>/ServletUsuarioController?acao=buscarEditar&id=${usuarios.id}"
+																	class="btn btn-warning">Ver</a></td>
+															</tr>
+														</c:forEach>
 													</tbody>
 												</table>
 											</div>
@@ -186,7 +198,7 @@
 		function verEditar(id) {
 			var urlAction = document.getElementById("form").action;
 			window.location.href = urlAction + '?acao=buscarEditar&id=' + id; /*redireciona para uma nova url cocatenando os valores da 
-																							acao e id*/
+																									acao e id*/
 		}
 	</script>
 

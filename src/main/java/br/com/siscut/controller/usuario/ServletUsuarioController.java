@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.siscut.dao.DAOUsuarioRepository;
 import br.com.siscut.model.Usuario;
 
-public class ServletUsuarioController extends HttpServlet {
+public class ServletUsuarioController extends ServletGenericUtil {
 	private static final long serialVersionUID = 1L;
 
 	public ServletUsuarioController() {
@@ -30,9 +30,10 @@ public class ServletUsuarioController extends HttpServlet {
 			if (acao != null && !acao.isEmpty() && acao.equals("deletar")) {
 				String idUser = request.getParameter("id");
 				oDAOUsuarioRepository.deletarUsuario(Long.parseLong(idUser));
-				RequestDispatcher retornar = request.getRequestDispatcher("/principal/usuario.jsp");
 				request.setAttribute("msg", "Excluído com sucesso!");
-				retornar.forward(request, response);
+				List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista(super.getUserLogado(request));
+				request.setAttribute("ousuarios", oUsuarios);				
+				request.getRequestDispatcher("/principal/usuario.jsp").forward(request, response);
 			}else if(acao != null && !acao.isEmpty() && acao.equals("deletarAjax")) {
 				String idUser = request.getParameter("id");
 				oDAOUsuarioRepository.deletarUsuario(Long.parseLong(idUser));
@@ -40,24 +41,29 @@ public class ServletUsuarioController extends HttpServlet {
 			} 
 			else if(acao != null && !acao.isEmpty() && acao.equals("buscarNomeAjax")) {
 				String nomeUser = request.getParameter("buscaNome");
-				List<Usuario> dadosJson = oDAOUsuarioRepository.consultaPorNome(nomeUser);
+				List<Usuario> dadosJson = oDAOUsuarioRepository.consultaPorNome(nomeUser,super.getUserLogado(request));
 				ObjectMapper mapper = new ObjectMapper();
 				String jsonUserNome = mapper.writeValueAsString(dadosJson);
 				response.getWriter().write(jsonUserNome);
 			}
 			else if(acao !=null && !acao.isEmpty() && acao.equals("buscarEditar")) {
 				String idUser = request.getParameter("id");
-				Usuario oUsuario  = oDAOUsuarioRepository.consultarUsuarioId(idUser);
-				List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista();
+				Usuario oUsuario  = oDAOUsuarioRepository.consultarUsuarioId(idUser,super.getUserLogado(request));
+				List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista(super.getUserLogado(request));
 				request.setAttribute("ousuarios", oUsuarios);
 				request.setAttribute("msg", "Usuario em Edição");
 				request.setAttribute("ousuario", oUsuario); //armazena os dados na variavel para carregar na tela usuario.jsp
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 			else if(acao !=null && !acao.isEmpty() && acao.equals("listarUsuarios")) {
-				List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista();
+				List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista(super.getUserLogado(request));
 				request.setAttribute("ousuarios", oUsuarios);
 				request.setAttribute("msg", "Usuarios carregados");
+				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			}
+			else {
+				List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista(super.getUserLogado(request));
+				request.setAttribute("ousuarios", oUsuarios);
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
@@ -76,6 +82,7 @@ public class ServletUsuarioController extends HttpServlet {
 			String email = request.getParameter("email");
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
+			String perfil = request.getParameter("perfil");
 			String msg = "Operação realizada com sucesso!";
 
 			Usuario oUsuario = new Usuario();
@@ -84,6 +91,7 @@ public class ServletUsuarioController extends HttpServlet {
 			oUsuario.setEmail(email);
 			oUsuario.setLogin(login);
 			oUsuario.setSenha(senha);
+			oUsuario.setPerfil(perfil);
 			if (oDAOUsuarioRepository.validaLogin(oUsuario.getLogin()) && oUsuario.getId() == null) {
 				msg = "Já existe usuário com o mesmo login informe outro login";
 			} else {
@@ -93,9 +101,9 @@ public class ServletUsuarioController extends HttpServlet {
 					msg = "Atualizado com sucesso!";
 
 				}
-				oUsuario = oDAOUsuarioRepository.gravar(oUsuario);
+				oUsuario = oDAOUsuarioRepository.gravar(oUsuario,super.getUserLogado(request));
 			}
-			List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista();
+			List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista(super.getUserLogado(request));
 			request.setAttribute("ousuarios", oUsuarios);
 			request.setAttribute("msg", msg);
 			request.setAttribute("ousuario", oUsuario);
