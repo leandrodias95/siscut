@@ -24,3 +24,9 @@ ALTER TABLE model_login ALTER COLUMN email TYPE VARCHAR(300),
   ADD CONSTRAINT email_unique UNIQUE (email);
 
 insert into model_login (login,senha) values('admin','admin')
+
+alter table model_login add column useradmin boolean not null default false;
+
+alter table model_login add column usuario_id bigint not null default 1;
+
+alter table model_login add constraint usuario_fk foreign key (usuario_id) references model_login(id);
