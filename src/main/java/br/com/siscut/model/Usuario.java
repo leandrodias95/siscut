@@ -1,6 +1,9 @@
 package br.com.siscut.model;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String login;
 	private String senha;
@@ -8,6 +11,7 @@ public class Usuario {
 	private String nome;
 	private boolean userAdmin;
 	private String perfil;
+	private String sexo;
 	
 	public Long getId() {
 		return id;
@@ -62,10 +66,17 @@ public class Usuario {
 	public void setPerfil(String perfil) {
 		this.perfil = perfil;
 	}
+
+	public String getSexo() {
+		return sexo;
+	}
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", login=" + login + ", senha=" + senha + ", email=" + email + ", nome=" + nome
-				+ ", userAdmin=" + userAdmin + "]";
+				+ ", userAdmin=" + userAdmin + ", perfil=" + perfil + ", sexo=" + sexo + "]";
 	}
 		
 

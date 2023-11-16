@@ -1,3 +1,4 @@
+<%@page import="br.com.siscut.model.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -53,10 +54,34 @@
 															</div>
 															<div class="form-group form-default form-static-label">
 																<select name="perfil" class="form-control" aria-label="Default select example"  required="required">
-																<option>${ousuario.perfil}</option>
-																<option value="ADMINISTRADOR">Administrador</option>
-																<option value="SECRETARIO">Secretário</option>
-																<option value="AUXILIAR">Auxiliar</option>
+																<option>Selecione um perfil</option>
+																<option value="ADMINISTRADOR"
+																<% Usuario ousuario = (Usuario) request.getAttribute("ousuario");
+																if(ousuario!=null && ousuario.getPerfil().equals("ADMINISTRADOR")){
+																	out.print("");
+																	out.print("Selected=\"selected\"");
+																	out.print("");
+																}
+																%>
+																>Administrador</option>
+																<option value="SECRETARIO"
+																<% ousuario = (Usuario) request.getAttribute("ousuario");
+																if(ousuario!=null && ousuario.getPerfil().equals("SECRETARIO")){
+																	out.print("");
+																	out.print("Selected=\"selected\"");
+																	out.print("");
+																}
+																%>
+																>Secretário</option>
+																<option value="AUXILIAR"
+																<% ousuario = (Usuario) request.getAttribute("ousuario");
+																if(ousuario!=null && ousuario.getPerfil().equals("AUXILIAR")){
+																	out.print("");
+																	out.print("Selected=\"selected\"");
+																	out.print("");
+																}
+																%>
+																>Auxiliar</option>
 																</select>
 												 <span class="form-bar"></span><label class="float-label">Selecionar Usuário</label>
 															</div>
@@ -66,6 +91,26 @@
 																	class="form-control" required="required"
 																	autocomplete="off" value="${ousuario.email}"> <span
 																	class="form-bar"></span> <label class="float-label">E-mail</label>
+															</div>
+															<div class="form-group form-default form-static-label">
+															<input type="radio" name="sexo" value="MASCULINO" checked="checked"
+															<% ousuario = (Usuario) request.getAttribute("ousuario");
+																if(ousuario!=null && ousuario.getSexo().equals("MASCULINO")){
+																	out.print("");
+																	out.print("Checked=\"checked\"");
+																	out.print("");
+																}
+																%>
+															>Masculino</>
+															<input type="radio" name="sexo" value="FEMININO"
+															<% ousuario = (Usuario) request.getAttribute("ousuario");
+																if(ousuario!=null && ousuario.getSexo().equals("FEMININO")){
+																	out.print("");
+																	out.print("Checked=\"checked\"");
+																	out.print("");
+																}
+																%>
+															>Feminino</>
 															</div>
 															<div class="form-group form-default form-static-label">
 																<input type="text" name="login" id="login"
