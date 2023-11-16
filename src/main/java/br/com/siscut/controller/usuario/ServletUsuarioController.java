@@ -83,6 +83,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
 			String perfil = request.getParameter("perfil");
+			String sexo = request.getParameter("sexo");
 			String msg = "Operação realizada com sucesso!";
 
 			Usuario oUsuario = new Usuario();
@@ -92,6 +93,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			oUsuario.setLogin(login);
 			oUsuario.setSenha(senha);
 			oUsuario.setPerfil(perfil);
+			oUsuario.setSexo(sexo);
 			if (oDAOUsuarioRepository.validaLogin(oUsuario.getLogin()) && oUsuario.getId() == null) {
 				msg = "Já existe usuário com o mesmo login informe outro login";
 			} else {
