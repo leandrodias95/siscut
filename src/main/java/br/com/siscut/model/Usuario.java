@@ -12,6 +12,8 @@ public class Usuario implements Serializable {
 	private boolean userAdmin;
 	private String perfil;
 	private String sexo;
+	private String fotouser; 
+	private String extensaofotouser; 
 	
 	public Long getId() {
 		return id;
@@ -77,6 +79,18 @@ public class Usuario implements Serializable {
 	public String toString() {
 		return "Usuario [id=" + id + ", login=" + login + ", senha=" + senha + ", email=" + email + ", nome=" + nome
 				+ ", userAdmin=" + userAdmin + ", perfil=" + perfil + ", sexo=" + sexo + "]";
+	}
+	public String getFotouser() {
+		return fotouser;
+	}
+	public void setFotouser(String fotouser) {
+		this.fotouser = fotouser;
+	}
+	public String getExtensaofotouser() {
+		return extensaofotouser;
+	}
+	public void setExtensaofotouser(String extensaofotouser) {
+		this.extensaofotouser = extensaofotouser;
 	}
 		
 

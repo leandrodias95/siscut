@@ -1,19 +1,24 @@
 package br.com.siscut.controller.usuario;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.fileupload2.jakarta.JakartaServletFileUpload;
+import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.siscut.dao.DAOUsuarioRepository;
 import br.com.siscut.model.Usuario;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
+@MultipartConfig
 public class ServletUsuarioController extends ServletGenericUtil {
 	private static final long serialVersionUID = 1L;
 
@@ -94,6 +99,16 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			oUsuario.setSenha(senha);
 			oUsuario.setPerfil(perfil);
 			oUsuario.setSexo(sexo);
+			if(JakartaServletFileUpload.isMultipartContent(request)) {
+				Part part = request.getPart("filefoto"); 
+				if(part.getSize()>0) {
+					byte[] foto = IOUtils.toByteArray(part.getInputStream()); //converte imagem para byte
+					String imagemBase64 = "data:" + part.getContentType().split("\\/")[1]+";base64," + new Base64().encodeBase64String(foto);
+					oUsuario.setFotouser(imagemBase64);
+					oUsuario.setExtensaofotouser(part.getContentType().split("\\/")[1]);
+					
+				}
+			}
 			if (oDAOUsuarioRepository.validaLogin(oUsuario.getLogin()) && oUsuario.getId() == null) {
 				msg = "Já existe usuário com o mesmo login informe outro login";
 			} else {

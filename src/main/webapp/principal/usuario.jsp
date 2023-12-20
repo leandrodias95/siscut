@@ -36,7 +36,7 @@
 													<div class="card-block">
 														<h4>Cad. usuário</h4>
 														<hr>
-														<form class="form-material"
+														<form class="form-material" enctype="multipart/form-data"
 															action="<%=request.getContextPath()%>/ServletUsuarioController"
 															method="post" id="form">
 															<input type="hidden" name="acao" id="acao" value="">
@@ -46,6 +46,26 @@
 																	value="${ousuario.id}" readonly="readonly"> <span
 																	class="form-bar"></span> <label class="float-label">ID:</label>
 															</div>
+
+															<div class="form-group form-default input-group mb-4">
+																<div class="input-group-prepend">
+																<c:choose>
+																<c:when test="${ousuario.fotouser!='' && ousuario.fotouser!= null }">
+																	<img alt="Imagem User" id="fotoembase64"
+																	src="${ousuario.fotouser}" width="70px">
+																	</c:when>
+																	<c:otherwise>
+																	<img alt="Imagem User" id="fotoembase64"
+																	src="assets/images/user.jpg" width="70px">
+																	</c:otherwise>
+																	</c:choose>
+																</div>
+																<input type="file" name="filefoto" id="filefoto"
+																	accept="img/*"
+																	onchange="visualizarImg('fotoembase64', 'filefoto')"
+																	class="form-control-file"
+																	style="margin-top: 15px; margin-left: 5px;">
+															</div>
 															<div class="form-group form-default form-static-label">
 																<input type="text" name="nome" id="nome"
 																	class="form-control" required="required"
@@ -53,37 +73,32 @@
 																	class="form-bar"></span> <label class="float-label">Nome:</label>
 															</div>
 															<div class="form-group form-default form-static-label">
-																<select name="perfil" class="form-control" aria-label="Default select example"  required="required">
-																<option>Selecione um perfil</option>
-																<option value="ADMINISTRADOR"
-																<% Usuario ousuario = (Usuario) request.getAttribute("ousuario");
-																if(ousuario!=null && ousuario.getPerfil().equals("ADMINISTRADOR")){
-																	out.print("");
-																	out.print("Selected=\"selected\"");
-																	out.print("");
-																}
-																%>
-																>Administrador</option>
-																<option value="SECRETARIO"
-																<% ousuario = (Usuario) request.getAttribute("ousuario");
-																if(ousuario!=null && ousuario.getPerfil().equals("SECRETARIO")){
-																	out.print("");
-																	out.print("Selected=\"selected\"");
-																	out.print("");
-																}
-																%>
-																>Secretário</option>
-																<option value="AUXILIAR"
-																<% ousuario = (Usuario) request.getAttribute("ousuario");
-																if(ousuario!=null && ousuario.getPerfil().equals("AUXILIAR")){
-																	out.print("");
-																	out.print("Selected=\"selected\"");
-																	out.print("");
-																}
-																%>
-																>Auxiliar</option>
-																</select>
-												 <span class="form-bar"></span><label class="float-label">Selecionar Usuário</label>
+																<select name="perfil" class="form-control"
+																	aria-label="Default select example" required="required">
+																	<option>Selecione um perfil</option>
+																	<option value="ADMINISTRADOR"
+																		<%Usuario ousuario = (Usuario) request.getAttribute("ousuario");
+if (ousuario != null && ousuario.getPerfil().equals("ADMINISTRADOR")) {
+	out.print("");
+	out.print("Selected=\"selected\"");
+	out.print("");
+}%>>Administrador</option>
+																	<option value="SECRETARIO"
+																		<%ousuario = (Usuario) request.getAttribute("ousuario");
+if (ousuario != null && ousuario.getPerfil().equals("SECRETARIO")) {
+	out.print("");
+	out.print("Selected=\"selected\"");
+	out.print("");
+}%>>Secretário</option>
+																	<option value="AUXILIAR"
+																		<%ousuario = (Usuario) request.getAttribute("ousuario");
+if (ousuario != null && ousuario.getPerfil().equals("AUXILIAR")) {
+	out.print("");
+	out.print("Selected=\"selected\"");
+	out.print("");
+}%>>Auxiliar</option>
+																</select> <span class="form-bar"></span><label
+																	class="float-label">Selecionar Usuário</label>
 															</div>
 
 															<div class="form-group form-default form-static-label">
@@ -93,24 +108,21 @@
 																	class="form-bar"></span> <label class="float-label">E-mail</label>
 															</div>
 															<div class="form-group form-default form-static-label">
-															<input type="radio" name="sexo" value="MASCULINO" checked="checked"
-															<% ousuario = (Usuario) request.getAttribute("ousuario");
-																if(ousuario!=null && ousuario.getSexo().equals("MASCULINO")){
-																	out.print("");
-																	out.print("Checked=\"checked\"");
-																	out.print("");
-																}
-																%>
-															>Masculino</>
-															<input type="radio" name="sexo" value="FEMININO"
-															<% ousuario = (Usuario) request.getAttribute("ousuario");
-																if(ousuario!=null && ousuario.getSexo().equals("FEMININO")){
-																	out.print("");
-																	out.print("Checked=\"checked\"");
-																	out.print("");
-																}
-																%>
-															>Feminino</>
+																<input type="radio" name="sexo" value="MASCULINO"
+																	checked="checked"
+																	<%ousuario = (Usuario) request.getAttribute("ousuario");
+if (ousuario != null && ousuario.getSexo().equals("MASCULINO")) {
+	out.print("");
+	out.print("Checked=\"checked\"");
+	out.print("");
+}%>>Masculino</>
+																<input type="radio" name="sexo" value="FEMININO"
+																	<%ousuario = (Usuario) request.getAttribute("ousuario");
+if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
+	out.print("");
+	out.print("Checked=\"checked\"");
+	out.print("");
+}%>>Feminino</>
 															</div>
 															<div class="form-group form-default form-static-label">
 																<input type="text" name="login" id="login"
@@ -243,7 +255,21 @@
 		function verEditar(id) {
 			var urlAction = document.getElementById("form").action;
 			window.location.href = urlAction + '?acao=buscarEditar&id=' + id; /*redireciona para uma nova url cocatenando os valores da 
-																									acao e id*/
+																											acao e id*/
+		}
+
+		function visualizarImg(fotoembase64, filefoto) {
+			var preview = document.getElementById(fotoembase64);
+			var fileUser = document.getElementById(filefoto).files[0];
+			var reader = new FileReader();
+			reader.onloadend = function() {
+				preview.src = reader.result; //carrega a foto na tela
+			};
+			if (fileUser) {
+				reader.readAsDataURL(fileUser); //preview da imagem 
+			} else {
+				preview.src = '';
+			}
 		}
 	</script>
 
