@@ -15,18 +15,17 @@ CREATE TABLE IF NOT EXISTS public.model_login
     id integer NOT NULL DEFAULT nextval('model_login_id_seq'::regclass),
     nome character varying(300) COLLATE pg_catalog."default" NOT NULL,
     email character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    useradmin boolean NOT NULL DEFAULT false,
+    usuario_id bigint NOT NULL DEFAULT 1,
+    perfil character varying(200) COLLATE pg_catalog."default" DEFAULT 'AUXILIAR'::character varying,
+    sexo character varying(100) COLLATE pg_catalog."default" NOT NULL DEFAULT 'MASCULINO'::character varying,
+    fotouser text COLLATE pg_catalog."default",
+    extensaofotouser character varying(10) COLLATE pg_catalog."default",
     CONSTRAINT model_login_pkey PRIMARY KEY (id),
-    CONSTRAINT login_unique UNIQUE (login)
+    CONSTRAINT email_unique UNIQUE (email),
+    CONSTRAINT login_unique UNIQUE (login),
+    CONSTRAINT usuario_fk FOREIGN KEY (usuario_id)
+        REFERENCES public.model_login (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 )
-
-ALTER TABLE model_login ALTER COLUMN email TYPE VARCHAR(300), 
-  ALTER COLUMN email SET NOT NULL, 
-  ADD CONSTRAINT email_unique UNIQUE (email);
-
-insert into model_login (login,senha) values('admin','admin')
-
-alter table model_login add column useradmin boolean not null default false;
-
-alter table model_login add column usuario_id bigint not null default 1;
-
-alter table model_login add constraint usuario_fk foreign key (usuario_id) references model_login(id);
