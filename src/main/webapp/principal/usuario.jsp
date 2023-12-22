@@ -130,8 +130,8 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 															</div>
 
 															<div class="form-group form-default form-static-label">
-																<input onblur="pesquisarCep()" type="text" name="cep" id="cep"
-																	class="form-control" required="required"
+																<input onblur="pesquisarCep()" type="text" name="cep"
+																	id="cep" class="form-control" required="required"
 																	autocomplete="off" value="${ousuario.cep}"> <span
 																	class="form-bar"></span> <label class="float-label">CEP:</label>
 															</div>
@@ -222,6 +222,19 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 										</div>
 									</div>
 									<!-- Page-body end -->
+
+									<nav aria-label="Page navigation example">
+										<ul class="pagination">
+										<%
+										int totalPagina = (int)request.getAttribute("totalPagina");
+										for(int p=0; p<totalPagina; p++){
+											String url = request.getContextPath()+"/ServletUsuarioController?acao=paginar&pagina="+(p*5);
+											out.print("<li class=\"page-item\"><a class=\"page-link\" href=\"" + url + "\">" + (p+1) + "</a></li>");
+										}
+										%>
+										</ul>
+									</nav>
+
 								</div>
 								<div id="styleSelector"></div>
 							</div>
@@ -306,7 +319,7 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 		function verEditar(id) {
 			var urlAction = document.getElementById("form").action;
 			window.location.href = urlAction + '?acao=buscarEditar&id=' + id; /*redireciona para uma nova url cocatenando os valores da 
-																													acao e id*/
+																															acao e id*/
 		}
 
 		function visualizarImg(fotoembase64, filefoto) {
@@ -322,23 +335,21 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 				preview.src = '';
 			}
 		}
-		
-		
-		function pesquisarCep(){
+
+		function pesquisarCep() {
 			var cep = $("#cep").val();
-			 $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
-				 if (!("erro" in dados)) {
-                     //Atualiza os campos com os valores da consulta.
-                     $("#logradouro").val(dados.logradouro);
-                     $("#bairro").val(dados.bairro);
-                     $("#localidade").val(dados.localidade);
-                     $("#uf").val(dados.uf);
-                 } 
-			 });
+			$.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?",
+					function(dados) {
+						if (!("erro" in dados)) {
+							//Atualiza os campos com os valores da consulta.
+							$("#logradouro").val(dados.logradouro);
+							$("#bairro").val(dados.bairro);
+							$("#localidade").val(dados.localidade);
+							$("#uf").val(dados.uf);
+						}
+					});
 
 		}
-		
-		
 	</script>
 
 	<!-- Modal -->
