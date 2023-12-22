@@ -66,6 +66,15 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				request.setAttribute("msg", "Usuarios carregados");
 				request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			}
+			
+			else if(acao!=null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")) {
+				String idUser = request.getParameter("id");
+				Usuario usuario = oDAOUsuarioRepository.consultarUsuarioId(idUser, super.getUserLogado(request));
+				if(usuario.getFotouser()!=null && !usuario.getFotouser().isEmpty()) {
+					response.setHeader("Content-Disposition", "attachement;filename=arquivo."+usuario.getExtensaofotouser()); //nome do arquivo e cocatena com a extensão
+					response.getOutputStream().write(new Base64().decodeBase64(usuario.getFotouser().split("\\,")[1])); //decodifica a string base64, traz a foto e separa o "data"
+				}
+			}
 			else {
 				List<Usuario>oUsuarios = oDAOUsuarioRepository.consultaLista(super.getUserLogado(request));
 				request.setAttribute("ousuarios", oUsuarios);
