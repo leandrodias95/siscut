@@ -98,6 +98,12 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			String senha = request.getParameter("senha");
 			String perfil = request.getParameter("perfil");
 			String sexo = request.getParameter("sexo");
+			String cep = request.getParameter("cep");
+			String logradouro = request.getParameter("logradouro");
+			String bairro = request.getParameter("bairro");
+			String localidade = request.getParameter("localidade");
+			String uf = request.getParameter("uf");
+			String numero = request.getParameter("numero");
 			String msg = "Operação realizada com sucesso!";
 
 			Usuario oUsuario = new Usuario();
@@ -108,6 +114,13 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			oUsuario.setSenha(senha);
 			oUsuario.setPerfil(perfil);
 			oUsuario.setSexo(sexo);
+			oUsuario.setCep(cep);
+			oUsuario.setLogradouro(logradouro);
+			oUsuario.setBairro(bairro);
+			oUsuario.setLocalidade(localidade);
+			oUsuario.setUf(uf);
+			oUsuario.setNumero(numero);
+			
 			if(JakartaServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("filefoto"); 
 				if(part.getSize()>0) {

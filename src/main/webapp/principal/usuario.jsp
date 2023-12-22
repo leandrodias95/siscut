@@ -49,17 +49,19 @@
 
 															<div class="form-group form-default input-group mb-4">
 																<div class="input-group-prepend">
-																<c:choose>
-																<c:when test="${ousuario.fotouser!='' && ousuario.fotouser!= null }">
-																<a href="<%=request.getContextPath()%>/ServletUsuarioController?acao=downloadFoto&id=${ousuario.id}">
-																	<img alt="Imagem User" id="fotoembase64"
-																	src="${ousuario.fotouser}" width="70px">
-																	</a>
-																	</c:when>
-																	<c:otherwise>
-																	<img alt="Imagem User" id="fotoembase64"
-																	src="assets/images/user.jpg" width="70px">
-																	</c:otherwise>
+																	<c:choose>
+																		<c:when
+																			test="${ousuario.fotouser!='' && ousuario.fotouser!= null }">
+																			<a
+																				href="<%=request.getContextPath()%>/ServletUsuarioController?acao=downloadFoto&id=${ousuario.id}">
+																				<img alt="Imagem User" id="fotoembase64"
+																				src="${ousuario.fotouser}" width="70px">
+																			</a>
+																		</c:when>
+																		<c:otherwise>
+																			<img alt="Imagem User" id="fotoembase64"
+																				src="assets/images/user.jpg" width="70px">
+																		</c:otherwise>
 																	</c:choose>
 																</div>
 																<input type="file" name="filefoto" id="filefoto"
@@ -126,6 +128,53 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 	out.print("");
 }%>>Feminino</>
 															</div>
+
+															<div class="form-group form-default form-static-label">
+																<input onblur="pesquisarCep()" type="text" name="cep" id="cep"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${ousuario.cep}"> <span
+																	class="form-bar"></span> <label class="float-label">CEP:</label>
+															</div>
+
+															<div class="form-group form-default form-static-label">
+																<input type="text" name="logradouro" id="logradouro"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${ousuario.logradouro}">
+																<span class="form-bar"></span> <label
+																	class="float-label">Rua:</label>
+															</div>
+
+															<div class="form-group form-default form-static-label">
+																<input type="text" name="bairro" id="bairro"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${ousuario.bairro}">
+																<span class="form-bar"></span> <label
+																	class="float-label">Bairro:</label>
+															</div>
+
+															<div class="form-group form-default form-static-label">
+																<input type="text" name="localidade" id="localidade"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${ousuario.localidade}">
+																<span class="form-bar"></span> <label
+																	class="float-label">Cidade:</label>
+															</div>
+
+															<div class="form-group form-default form-static-label">
+																<input type="text" name="uf" id="uf"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${ousuario.uf}"> <span
+																	class="form-bar"></span> <label class="float-label">Estado:</label>
+															</div>
+
+															<div class="form-group form-default form-static-label">
+																<input type="text" name="numero" id="numero"
+																	class="form-control" required="required"
+																	autocomplete="off" value="${ousuario.numero}">
+																<span class="form-bar"></span> <label
+																	class="float-label">Número:</label>
+															</div>
+
 															<div class="form-group form-default form-static-label">
 																<input type="text" name="login" id="login"
 																	class="form-control" required="required"
@@ -257,7 +306,7 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 		function verEditar(id) {
 			var urlAction = document.getElementById("form").action;
 			window.location.href = urlAction + '?acao=buscarEditar&id=' + id; /*redireciona para uma nova url cocatenando os valores da 
-																											acao e id*/
+																													acao e id*/
 		}
 
 		function visualizarImg(fotoembase64, filefoto) {
@@ -273,6 +322,23 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 				preview.src = '';
 			}
 		}
+		
+		
+		function pesquisarCep(){
+			var cep = $("#cep").val();
+			 $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+				 if (!("erro" in dados)) {
+                     //Atualiza os campos com os valores da consulta.
+                     $("#logradouro").val(dados.logradouro);
+                     $("#bairro").val(dados.bairro);
+                     $("#localidade").val(dados.localidade);
+                     $("#uf").val(dados.uf);
+                 } 
+			 });
+
+		}
+		
+		
 	</script>
 
 	<!-- Modal -->

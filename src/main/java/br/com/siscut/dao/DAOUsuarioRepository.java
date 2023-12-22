@@ -20,7 +20,7 @@ public class DAOUsuarioRepository {
 	public Usuario gravar(Usuario usuario, Long userLogado) throws SQLException {
 		if (usuario.isNovo() == true) {
 			try {
-				String sql = "insert into model_login(login,senha,email,nome,usuario_id,perfil,sexo)values(?,?,?,?,?,?,?)";
+				String sql = "insert into model_login(login,senha,email,nome,usuario_id,perfil,sexo,cep,logradouro,bairro,localidade,uf,numero)values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 				PreparedStatement statement = connection.prepareStatement(sql);
 				statement.setString(1, usuario.getLogin());
 				statement.setString(2, usuario.getSenha());
@@ -29,6 +29,12 @@ public class DAOUsuarioRepository {
 				statement.setLong(5, userLogado);
 				statement.setString(6, usuario.getPerfil());
 				statement.setString(7, usuario.getSexo());
+				statement.setString(8, usuario.getCep());
+				statement.setString(9, usuario.getLogradouro());
+				statement.setString(10, usuario.getBairro());
+				statement.setString(11, usuario.getLocalidade());
+				statement.setString(12, usuario.getUf());
+				statement.setString(13, usuario.getNumero());
 				statement.execute();
 				connection.commit();
 				if(usuario.getFotouser()!=null && !usuario.getFotouser().isEmpty()) {
@@ -51,7 +57,7 @@ public class DAOUsuarioRepository {
 
 		} else{
 			try {
-				String sql = "update model_login set login=?, senha=?, email=?, nome=?, perfil=?, sexo=?, fotouser=?, extensaofotouser=? where id ="
+				String sql = "update model_login set login=?, senha=?, email=?, nome=?, perfil=?, sexo=?, fotouser=?, extensaofotouser=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=? where id ="
 						+ usuario.getId();
 				PreparedStatement statement = connection.prepareStatement(sql);
 				statement.setString(1, usuario.getLogin());
@@ -62,6 +68,12 @@ public class DAOUsuarioRepository {
 				statement.setString(6, usuario.getSexo());
 				statement.setString(7, usuario.getFotouser());
 				statement.setString(8, usuario.getExtensaofotouser());
+				statement.setString(9, usuario.getCep());
+				statement.setString(10, usuario.getLogradouro());
+				statement.setString(11, usuario.getBairro());
+				statement.setString(12, usuario.getLocalidade());
+				statement.setString(13, usuario.getUf());
+				statement.setString(14, usuario.getNumero());
 				statement.executeUpdate();
 				connection.commit();
 			} catch (Exception ex) {
@@ -114,6 +126,12 @@ public class DAOUsuarioRepository {
 			oUsuario.setPerfil(resultado.getString("perfil"));
 			oUsuario.setSexo(resultado.getString("sexo"));
 			oUsuario.setFotouser(resultado.getString("fotouser"));
+			oUsuario.setCep(resultado.getString("cep"));
+			oUsuario.setLogradouro(resultado.getString("logradouro"));
+			oUsuario.setBairro(resultado.getString("bairro"));
+			oUsuario.setLocalidade(resultado.getString("localidade"));
+			oUsuario.setUf(resultado.getString("uf"));
+			oUsuario.setNumero(resultado.getString("numero"));
 			retorno.add(oUsuario);
 			
 		}
@@ -191,6 +209,12 @@ public class DAOUsuarioRepository {
 			oUsuario.setSexo(resultado.getString("sexo"));
 			oUsuario.setFotouser(resultado.getString("fotouser"));
 			oUsuario.setExtensaofotouser(resultado.getString("extensaofotouser"));
+			oUsuario.setCep(resultado.getString("cep"));
+			oUsuario.setLogradouro(resultado.getString("logradouro"));
+			oUsuario.setBairro(resultado.getString("bairro"));
+			oUsuario.setLocalidade(resultado.getString("localidade"));
+			oUsuario.setUf(resultado.getString("uf"));
+			oUsuario.setNumero(resultado.getString("numero"));
 			
 			
 		}
