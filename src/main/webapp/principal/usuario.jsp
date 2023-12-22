@@ -51,8 +51,10 @@
 																<div class="input-group-prepend">
 																<c:choose>
 																<c:when test="${ousuario.fotouser!='' && ousuario.fotouser!= null }">
+																<a href="<%=request.getContextPath()%>/ServletUsuarioController?acao=downloadFoto&id=${ousuario.id}">
 																	<img alt="Imagem User" id="fotoembase64"
 																	src="${ousuario.fotouser}" width="70px">
+																	</a>
 																	</c:when>
 																	<c:otherwise>
 																	<img alt="Imagem User" id="fotoembase64"
