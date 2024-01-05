@@ -24,6 +24,7 @@ public class DAOLoginRepository {
 		ResultSet resultado = statement.executeQuery();
 		if (resultado.next()) {
 			oUsuario.setPerfil(resultado.getString("perfil"));
+			oUsuario.setFotouser(resultado.getString("fotouser"));;
 			return true;
 		}
 		return false;

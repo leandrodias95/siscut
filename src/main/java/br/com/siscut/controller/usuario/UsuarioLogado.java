@@ -45,6 +45,7 @@ public class UsuarioLogado extends HttpServlet {
 				if (daoLoginRepository.validarAutenticacao(modelUsuario)) {
 					request.getSession().setAttribute("usuario", modelUsuario.getLogin());
 					request.getSession().setAttribute("perfil", modelUsuario.getPerfil());
+					request.getSession().setAttribute("fotoPerfil", modelUsuario.getFotouser());
 					if (url == null || url.equals("null")) {
 						url = "/principal/principal.jsp";
 						RequestDispatcher redirecionar = request.getRequestDispatcher(url);

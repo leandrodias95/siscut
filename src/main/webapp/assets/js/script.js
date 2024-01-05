@@ -226,7 +226,7 @@ function toggleFullScreen() {
     }
 }
 
-$('body').append('' +
+/*$('body').append('' +
     '<div class="fixed-button">' +
         '<a href="https://themeforest.net/item/mega-able-bootstrap-4-and-angular-5-admin-dashboard-template/20790784?ref=phoenixcoded" target="_blank" class="btn btn-md btn-primary">' +
             '<i class="fa fa-shopping-cart" aria-hidden="true"></i> Upgrade To Pro' +
@@ -241,4 +241,4 @@ $window.scroll(function() {
     } else {
         nav.removeClass('active');
     }
-});
+});*/

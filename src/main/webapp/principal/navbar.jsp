@@ -18,7 +18,7 @@
                           </div>
                       </div>
                       <a href="index.html">
-                          <img class="img-fluid" src="<%=request.getContextPath()%>/assets/images/logo.png" alt="Theme-Logo" />
+                          <img class="img-fluid" src="<%=request.getContextPath()%>/assets/images/logo.png" alt="Theme-Logo" style="width:62px;"/>
                       </a>
                       <a class="mobile-options waves-effect waves-light">
                           <i class="ti-more"></i>
@@ -39,22 +39,23 @@
                                   </div>
                               </div>
                           </li>
-                          <li>
+                          <!--  <li>
                               <a href="#!" onclick="javascript:toggleFullScreen()" class="waves-effect waves-light">
                                   <i class="ti-fullscreen"></i>
                               </a>
                           </li>
+                          -->
                       </ul>
                       <ul class="nav-right">
                           <li class="header-notification">
                               <a href="#!" class="waves-effect waves-light">
-                                  <i class="ti-bell"></i>
+                                   <!--   <i class="ti-bell"></i>-->
                                   <span class="badge bg-c-red"></span>
                               </a>
                               <ul class="show-notification">
                                   <li>
-                                      <h6>Notifications</h6>
-                                      <label class="label label-danger">New</label>
+                                      <h6>Notificações</h6>
+                                      <label class="label label-danger">Novo</label>
                                   </li>
                                   <li class="waves-effect waves-light">
                                       <div class="media">
@@ -90,12 +91,12 @@
                           </li>
                           <li class="user-profile header-notification">
                               <a href="#!" class="waves-effect waves-light">
-                                  <img src="<%=request.getContextPath()%>/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+                                 <!--  <img src="<%=request.getContextPath()%>/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">  -->
                                   <span><%=session.getAttribute("usuario") %></span>
                                   <i class="ti-angle-down"></i>
                               </a>
                               <ul class="show-notification profile-notification">
-                                  <li class="waves-effect waves-light">
+                                 <!--<li class="waves-effect waves-light">
                                       <a href="#!">
                                           <i class="ti-settings"></i> Settings
                                       </a>
@@ -114,10 +115,10 @@
                                       <a href="auth-lock-screen.html">
                                           <i class="ti-lock"></i> Lock Screen
                                       </a>
-                                  </li>
+                                  </li> -->
                                   <li class="waves-effect waves-light">
                                       <a href="UsuarioLogado?acao=logout">
-                                          <i class="ti-layout-sidebar-left"></i> Logout
+                                          <i class="ti-layout-sidebar-left"></i> Sair
                                       </a>
                                   </li>
                               </ul>
