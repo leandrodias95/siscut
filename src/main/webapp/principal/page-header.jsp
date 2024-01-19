@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
                       <div class="page-header">
                           <div class="page-block">
                               <div class="row align-items-center">
                                   <div class="col-md-8">
                                       <div class="page-header-title">
                                           <h5 class="m-b-10">Siscut</h5>
-                                          <p class="m-b-0">Sistema de Gest„o para Salıes de Beleza</p>
+                                          <p class="m-b-0">Sistema de Gest√£o para Sal√µes de Beleza</p>
                                       </div>
                                   </div>
                                   <div class="col-md-4">

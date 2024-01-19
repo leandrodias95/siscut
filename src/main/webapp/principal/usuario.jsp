@@ -1,6 +1,6 @@
 <%@page import="br.com.siscut.model.Usuario"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +34,7 @@
 												<!-- Basic Form Inputs card start -->
 												<div class="card">
 													<div class="card-block">
-														<h4>Cad. usu·rio</h4>
+														<h4>Cad. usu√°rio</h4>
 														<hr>
 														<form class="form-material" enctype="multipart/form-data"
 															action="<%=request.getContextPath()%>/ServletUsuarioController"
@@ -93,7 +93,7 @@ if (ousuario != null && ousuario.getPerfil().equals("SECRETARIO")) {
 	out.print("");
 	out.print("Selected=\"selected\"");
 	out.print("");
-}%>>Secret·rio</option>
+}%>>Secret√°rio</option>
 																	<option value="AUXILIAR"
 																		<%ousuario = (Usuario) request.getAttribute("ousuario");
 if (ousuario != null && ousuario.getPerfil().equals("AUXILIAR")) {
@@ -102,7 +102,7 @@ if (ousuario != null && ousuario.getPerfil().equals("AUXILIAR")) {
 	out.print("");
 }%>>Auxiliar</option>
 																</select> <span class="form-bar"></span><label
-																	class="float-label">Selecionar Usu·rio</label>
+																	class="float-label">Selecionar Usu√°rio</label>
 															</div>
 
 															<div class="form-group form-default form-static-label">
@@ -172,7 +172,7 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 																	class="form-control" required="required"
 																	autocomplete="off" value="${ousuario.numero}">
 																<span class="form-bar"></span> <label
-																	class="float-label">N˙mero:</label>
+																	class="float-label">N√∫mero:</label>
 															</div>
 
 															<div class="form-group form-default form-static-label">
@@ -254,7 +254,7 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 		}
 
 		function deleteUsuarioAjax() {
-			if (confirm('Deseja deletar o usu·rio?')) {
+			if (confirm('Deseja deletar o usu√°rio?')) {
 				var urlAction = document.getElementById("form").action; //busca os valores da servlet 
 				var idUser = document.getElementById("id").value;
 				$.ajax({
@@ -267,13 +267,13 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 					}
 				}).fail(
 						function(xhr, status, errorThrow) {
-							alert("Erro ao deletar usu·rio por id: "
+							alert("Erro ao deletar usu√°rio por id: "
 									+ xhr.responseText);
 						});
 			}
 		}
 		function deleteUsuario() {
-			if (confirm('Deseja deletar o usu·rio?')) {
+			if (confirm('Deseja deletar o usu√°rio?')) {
 				document.getElementById("form").method = 'get';
 				document.getElementById("acao").value = 'deletar';
 				document.getElementById("form").submit();
@@ -311,7 +311,7 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 									}
 								}).fail(
 								function(xhr, status, errorThrow) {
-									alert("Erro ao buscar usu·rio pelo nome: "
+									alert("Erro ao buscar usu√°rio pelo nome: "
 											+ xhr.responseText);
 								})
 			}
@@ -359,7 +359,7 @@ if (ousuario != null && ousuario.getSexo().equals("FEMININO")) {
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Pesquisar
-						usu·rio</h5>
+						usu√°rio</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>

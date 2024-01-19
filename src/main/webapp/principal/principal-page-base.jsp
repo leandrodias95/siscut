@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE>
 <html lang="en">
 <jsp:include page="head.jsp"></jsp:include>
@@ -25,7 +25,7 @@
                             <!-- Main-body start -->
                             <div class="main-body">
                                 <div class="page-wrapper">
-									<h1>Conteúdo da página</h1>
+									<h1>ConteÃºdo da pÃ¡gina</h1>
                                 </div>
                                 <div id="styleSelector"> </div>
                             </div>
