@@ -218,6 +218,12 @@ public class DAOUsuarioRepository {
 		usuario.setPerfil(resultado.getString("perfil"));
 		usuario.setSexo(resultado.getString("sexo"));
 		usuario.setFotouser(resultado.getString("fotouser"));
+		usuario.setCep(resultado.getString("cep"));
+		usuario.setLogradouro(resultado.getString("logradouro"));
+		usuario.setBairro(resultado.getString("bairro"));
+		usuario.setLocalidade(resultado.getString("localidade"));
+		usuario.setUf(resultado.getString("uf"));
+		usuario.setNumero(resultado.getString("numero"));
 		}
 		return usuario;
 	}
